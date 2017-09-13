@@ -1,0 +1,83 @@
+.rs {
+	cursor: pointer;
+}
+
+.open-blink {
+	content: ' ';
+	position: relative;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin: 0 20px;
+	border-radius: 50%;
+	/* background-color: #4caf50; */
+	-webkit-animation-name: flash;
+	animation-name: flash;
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+.open-blink:before {
+	content: ' ';
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	opacity: 0.1;
+	border-radius: 50%;
+	/* background-color: #4caf50; */
+}
+
+.enum {
+	display: inline;
+	color: white;
+	margin-left: 12px;
+	font-size: 19px;
+	width: 50px;
+	text-align: center;
+	font-weight: bold;
+	border-radius: 10px;
+}
+
+.header {
+	position: relative;
+	background-image: url(../image/lear_logo.jpg);
+	background-repeat: no-repeat;
+	background-size: 180px;
+	width: 100%;
+	height: 90px;
+	border-bottom: 2px solid grey;
+}
+
+.rile {
+	cursor: pointer;
+}
+
+.ril, .his {
+	width: auto;
+	margin-left: 300px;
+}
+
+.deptitle {
+	position: absolute;
+	bottom: 0px;
+	text-decoration: underline;
+	padding-left: 350px;
+}
+
+.ct {
+	width: 1230px;
+}
+
+.forms, .formse {
+	/*border: 2px solid blue;*/
+	position: relative;
+	float: right;
+	height: auto;
+	text-align: left;
+	padding-left: 80px;
+}
