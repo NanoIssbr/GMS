@@ -10,7 +10,7 @@ public class Users {
 	private String id;
 	private Date dateLastCnx;
 	private String userName;
-	//public List<ErrorObject> erreurLists = new ArrayList<>();
+	//public List<ErrorObject> erreurListss = new ArrayList<>();
 	/**
 	 * @return the id
 	 */
