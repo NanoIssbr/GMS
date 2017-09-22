@@ -41,4 +41,10 @@ public interface ProductDAO {
 	 */
 	public List<Product> findProductByQuantite(HttpServletRequest req);
 	
+	/**
+	 * @param req
+	 * @return
+	 */
+	public List<Product> getAllProduct(HttpServletRequest req);
+	
 }

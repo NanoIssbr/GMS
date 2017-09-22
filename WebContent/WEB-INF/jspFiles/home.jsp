@@ -211,7 +211,7 @@
 							Abonnement</p>
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;">
-						<form action="newAbonnement" id="newAbo" method="post">
+						<form action="newAbonnement" id="newAbn" method="post">
 							<label for="libelleProduct">Nom Client</label> 
 							<input type="text" name="nClient" class="form-control" id="nClient" required="required" autofocus /> 
 							<label for="qProduct">Date Abonnement</label>

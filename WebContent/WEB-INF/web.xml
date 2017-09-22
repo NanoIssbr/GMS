@@ -26,14 +26,30 @@
     <url-pattern>/logOut</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>NewProduct</servlet-name>
-  	<servlet-class>org.gms.servlets.NewProduct</servlet-class>
+    <servlet-name>NewProduct</servlet-name>
+    <servlet-class>org.gms.servlets.NewProduct</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>NewProduct</servlet-name>
-  	<url-pattern>/newProduct</url-pattern>
+    <servlet-name>NewProduct</servlet-name>
+    <url-pattern>/newProduct</url-pattern>
   </servlet-mapping>
   <listener>
-  	<listener-class>org.gms.config.InitDAOFactory</listener-class>
+    <listener-class>org.gms.config.InitDAOFactory</listener-class>
   </listener>
+  <servlet>
+    <servlet-name>NewAbonnement</servlet-name>
+    <servlet-class>org.gms.servlets.NewAbonnement</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewAbonnement</servlet-name>
+    <url-pattern>/newAbn</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>GetAllProduct</servlet-name>
+  	<servlet-class>org.gms.servlets.GetAllProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetAllProduct</servlet-name>
+  	<url-pattern>/getAPRD</url-pattern>
+  </servlet-mapping>
 </web-app>

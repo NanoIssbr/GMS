@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.List;
 
@@ -96,6 +97,25 @@ public class ServiceUtils {
 				System.out.println("Can't close the ResultSet " + e);
 			}
 		}
+	}
+	/**
+	 * @param connexion
+	 * @param sql
+	 * @param returnGeneratedKeys
+	 * @param objets
+	 * @return
+	 * @throws SQLException
+	 */
+	public static PreparedStatement initRequestPrepared(Connection connexion, String sql, boolean returnGeneratedKeys,
+			Object... objets) throws SQLException {
+		PreparedStatement preparedStatement = connexion.prepareStatement(sql,
+				returnGeneratedKeys ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS);
+		int nbrParam = preparedStatement.getParameterMetaData().getParameterCount();
+		for (int i = 0; i < nbrParam; i++) {
+			System.out.println(i + " " + objets[i]);
+			preparedStatement.setObject(i + 1, objets[i]);
+		}
+		return preparedStatement;
 	}
 	
 
