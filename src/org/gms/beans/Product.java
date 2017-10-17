@@ -16,6 +16,7 @@ public class Product {
 	private Integer quantiteMin;
 	private Double prize;
 	private String reference;
+	private Integer qnt;
 	/**
 	 * @return the idProduct
 	 */
@@ -89,12 +90,24 @@ public class Product {
 		this.reference = references;
 	}
 	/**
+	 * @return the qnt
+	 */
+	public Integer getQnt() {
+		return qnt;
+	}
+	/**
+	 * @param qnt the qnt to set
+	 */
+	public void setQnt(Integer qnt) {
+		this.qnt = qnt;
+	}
+	/**
 	 * @param idProduct
 	 * @param libelleProduct
 	 * @param dateCreation
 	 * @param quantiteMin
 	 */
-	public Product(String idProduct, String libelleProduct, String dateCreation, Integer quantiteMin, Double prix, String ref) {
+	public Product(String idProduct, String libelleProduct, String dateCreation, Integer quantiteMin, Double prix, String ref, Integer q) {
 		super();
 		this.idProduct = idProduct;
 		this.libelleProduct = libelleProduct;
@@ -102,6 +115,7 @@ public class Product {
 		this.quantiteMin = quantiteMin;
 		this.prize = prix;
 		this.reference = ref;
+		this.qnt = q;
 	}
 	public Product() {
 		

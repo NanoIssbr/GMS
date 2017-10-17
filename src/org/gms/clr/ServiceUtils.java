@@ -51,7 +51,7 @@ public class ServiceUtils {
 	public static Product getProductForm(HttpServletRequest req){
 		Product produit = new Product();
 		produit.setLibelleProduct(req.getParameter(INPUT_LIBELLE_PRODUCT));
-		produit.setQuantiteMin(Integer.valueOf(req.getParameter(INPUT_QUANTITE_MIN_PRODUCT)));
+		produit.setQnt(Integer.valueOf(req.getParameter(INPUT_QUANTITE_MIN_PRODUCT)));
 		produit.setPrize(Double.valueOf(req.getParameter(INPUT_PRIZE_PRODUCT)));
 		produit.setReferences(req.getParameter(INPUT_REFERENCE_PRODUCT));
 		return produit;

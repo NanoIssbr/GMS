@@ -43,6 +43,7 @@ public class ProductDAOImpl implements ProductDAO {
 			+ " > s.quantite ";
 
 	private DAOFactory daoFactory;
+	private StockDAO stockDAO;
 
 	/**
 	 * 
@@ -125,6 +126,8 @@ public class ProductDAOImpl implements ProductDAO {
 				int status = pState.executeUpdate();
 				if (status == 0) {
 					throw new DAOException("Can't create the product !");
+				}else{
+					stockDAO.addToStock(produit, req);
 				}
 			} catch (SQLException e) {
 				throw new DAOException(e);
@@ -132,7 +135,8 @@ public class ProductDAOImpl implements ProductDAO {
 				ServiceUtils.closeResources(cnx, pState);
 			}
 		} else {
-			errorList.add(new ErrorObject("Erreur", "Produit exist dejas !"));
+			//errorList.add(new ErrorObject("Erreur", "Produit exist dejas !"));
+			stockDAO.addToStock(produit, req);
 		}
 	}
 
@@ -143,8 +147,8 @@ public class ProductDAOImpl implements ProductDAO {
 		ResultSet rSet = null;
 		try {
 			cnx = daoFactory.getConnection();
-			pState = cnx.prepareStatement(QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT);
-			// pState = cnx.prepareStatement( QUERY_GET_ALL_PRODUCTSSS );
+			//pState = cnx.prepareStatement(QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT);
+			pState = cnx.prepareStatement( QUERY_GET_ALL_PRODUCTS);
 			rSet = pState.executeQuery();
 			if (rSet != null) {
 				listeProduct = mapMultiProduct(rSet);
