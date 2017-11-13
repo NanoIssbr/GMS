@@ -45,11 +45,11 @@
     <url-pattern>/newAbn</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>GetAllProduct</servlet-name>
-  	<servlet-class>org.gms.servlets.GetAllProduct</servlet-class>
+    <servlet-name>GetAllProduct</servlet-name>
+    <servlet-class>org.gms.servlets.GetAllProduct</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>GetAllProduct</servlet-name>
-  	<url-pattern>/getAPRD</url-pattern>
+    <servlet-name>GetAllProduct</servlet-name>
+    <url-pattern>/getAPRD</url-pattern>
   </servlet-mapping>
 </web-app>

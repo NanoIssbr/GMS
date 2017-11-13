@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.gms.beans.ErrorObject;
 import org.gms.beans.Product;
 import org.gms.beans.Users;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 //import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +29,10 @@ public class ServiceUtils {
 	public ServiceUtils(){
 		
 	}
+	/**
+	 * @param data
+	 * @return
+	 */
 	public static Calendar getDateFromString(String data){
 		Calendar cal = Calendar.getInstance();
 		Integer y,m,d;
@@ -116,6 +124,31 @@ public class ServiceUtils {
 			preparedStatement.setObject(i + 1, objets[i]);
 		}
 		return preparedStatement;
+	}
+	
+	/**
+	 * @param object
+	 * @return
+	 */
+	public static String objectToJson(Object object) {
+	    Gson gson = new GsonBuilder().setDateFormat(0, 0).create();
+	    String context = gson.toJson(object);
+	    return context;
+	  }
+	
+	public static StringBuffer listToHTMLTable(List<HashMap<String, Object>> listObj){
+		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Libelle</th><th>Prix</th><th>Reference</th>></tr></thead>");
+		for(HashMap<String, Object> map : listObj){
+			//tableWithData.append("<tr><td></td><td></td><td></td></tr>");
+			tableWithData.append("<tr>");
+			for(String key : map.keySet()){
+				tableWithData.append("<td>"+map.get(key)+"</td>");
+			}
+			tableWithData.append("</tr>");
+			
+		}
+		tableWithData.append("</table>");
+		return tableWithData;
 	}
 	
 

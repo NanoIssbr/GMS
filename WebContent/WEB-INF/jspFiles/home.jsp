@@ -37,7 +37,7 @@
 		<p class="deptitle col-md-11"
 			style="text-align: center; color: #FFFFFF">
 			<br /> <strong>GOLDEN MEDIA SAT<br />Gestion de stock<br />
-			<c:out value="${sessionScope._isSessionU.getUserName()}"></c:out>
+				<c:out value="${sessionScope._isSessionU.getUserName()}"></c:out>
 			</strong>
 		</p>
 	</div>
@@ -48,15 +48,7 @@
 				class="sidebar-brand">Produit</li>
 			<li id="lel"><a href="#"> Ajouter Produit </a></li>
 			<li id="dtel"><a href="#"> Modifier Produit </a></li>
-			<li id="h" style="color: white; cursor: pointer"
-				class="sidebar-brand">Visualisation du Stock
-				<p class="enum"></p>
-			</li>
-			<!-- show this link only for the admin xor the it team -->
-			<li id="adm" style="color: white; cursor: pointer"
-				class="sidebar-brand">Serveurs</li>
-			<li id="adm1"><a href="#"> &nbsp;&nbsp;&nbsp;Ajout
-					Abonnement </a></li>
+			<li id="allPrdBtn"><a href="#"> Visualisation du Stock </a></li>
 			<li class="sidebar-brand"><a href="logOut" style="color: red;">
 					Logout </a></li>
 		</ul>
@@ -76,7 +68,7 @@
 
 		<br />
 		<c:choose>
-			<c:when test="${ requestScope.abonnements != null }">
+			<c:when test="${requestScope.abonnements != null }">
 				<table class="table table-hover table-bordered"
 					style="border-collapse: collapse; color: white;">
 					<thead>
@@ -110,8 +102,7 @@
 				<c:out value="Aucun Abonnement !" />
 			</c:otherwise>
 		</c:choose>
-		<br />
-		<br />
+		<br /> <br />
 
 
 		<kbd class="">
@@ -177,15 +168,15 @@
 								id="libelleProduct" required="required" autofocus /> <label
 								for="qProduct">Quantité</label> <input type="number"
 								name="qProduct" class="form-control" id="qProduct" min="0"
-								required="required" /> <label for="qProduct">Réference</label> <input
-								type="text" name="rProduct" class="form-control" id="rProduct"
-								required="required" /> <label for="pProduct">Prix
+								required="required" /> <label for="qProduct">Réference</label>
+							<input type="text" name="rProduct" class="form-control"
+								id="rProduct" required="required" /> <label for="pProduct">Prix
 								Produit</label> <input type="number" name="pProduct"
 								class="form-control" min="0" id="pProduct" required="required" />
 							<br /> <input type="submit" name="submitNewProd"
-								class="btn btn-danger" value="Submit" /> <br />
-							<br />
-							<div class="alert alert-success alert-dismissible" style="display: none;" role="alert">
+								class="btn btn-danger" value="Submit" /> <br /> <br />
+							<div class="alert alert-success alert-dismissible"
+								style="display: none;" role="alert">
 								<button type="button" class="close" data-dismiss="alert"
 									aria-label="Close">
 									<span style="color: black;" aria-hidden="true">&times;</span>
@@ -198,7 +189,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- modal of new Abonnement -->
 	<div class="container">
 		<div class="modal fade" id="modalAbonnement" role="dialog">
@@ -212,16 +203,17 @@
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;">
 						<form action="newAbonnement" id="newAbn" method="post">
-							<label for="libelleProduct">Nom Client</label> 
-							<input type="text" name="nClient" class="form-control" id="nClient" required="required" autofocus /> 
-							<label for="qProduct">Date Abonnement</label>
-							<input type="date" name="dAbonnement" class="form-control" id="dAbonnement" required="required" /> 
-							<br /> 
-							<input type="submit" name="submitNewAbo" class="btn btn-danger" value="Submit" /> 
-							<br />
-							<br />
-							<div class="alert alert-success alert-dismissible" style="display: none;" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<label for="libelleProduct">Nom Client</label> <input type="text"
+								name="nClient" class="form-control" id="nClient"
+								required="required" autofocus /> <label for="qProduct">Date
+								Abonnement</label> <input type="date" name="dAbonnement"
+								class="form-control" id="dAbonnement" required="required" /> <br />
+							<input type="submit" name="submitNewAbo" class="btn btn-danger"
+								value="Submit" /> <br /> <br />
+							<div class="alert alert-success alert-dismissible"
+								style="display: none;" role="alert">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
 									<span style="color: black;" aria-hidden="true">&times;</span>
 								</button>
 								<strong>Info!</strong> <span id="infoMessageABo"></span>
@@ -232,6 +224,31 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- modal of All products -->
+	<div class="container">
+		<div class="modal fade" id="allPrdMdl" role="dialog">
+			<div style="width: 600px;" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"
+						style="padding: 35px 50px; background-color: black;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<p id="elem" style="color: white; font-size: 18px;">All
+							Product</p>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<div id="allPrd">
+							<form action="getAPRD" id="getAllPrds" method="post">
+								<span id="allProductShow"></span> <input type="submit"
+									name="submitAllPrds" class="btn btn-danger" value="Submit" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 </body>
 </html>
