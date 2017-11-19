@@ -52,4 +52,22 @@
     <servlet-name>GetAllProduct</servlet-name>
     <url-pattern>/getAPRD</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>GetAllProductToSell</servlet-name>
+    <servlet-class>org.gms.servlets.GetAllProductToSell</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllProductToSell</servlet-name>
+    <url-pattern>/getAPRDTS</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>SellIT</servlet-name>
+    <servlet-class>org.gms.servlets.SellIT</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SellIT</servlet-name>
+    <url-pattern>/vendre</url-pattern>
+  </servlet-mapping>
 </web-app>

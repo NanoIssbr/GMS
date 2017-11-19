@@ -20,6 +20,14 @@ public interface ProductDAO {
 	 * @return
 	 */
 	public Product findProduct(String id, boolean isID, HttpServletRequest req);
+	
+	/**
+	 * @param id
+	 * @param isID
+	 * @param req
+	 * @return
+	 */
+	public List<Product> findProducts(String id, boolean isID, HttpServletRequest req);
 	/**
 	 * @param libelle
 	 * @param id

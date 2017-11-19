@@ -29,18 +29,12 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String ATTR_REF_PRD = "reference";
 	private static final String ATTR_PRIZE_PRD = "prize";
 	private static final String ATTR_QNT_MIN_PRD = "qntmin";
-	
+
 	private static final String QUERY_GET_ALL_PRODUCTS = "select * from public.product";
-	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", "
-			+ ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD
-			+ ") VALUES (?, ?, ?, ?, ?, ?);";
-	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " where upper("
-			+ ATTR_LIB_PRD + ") = upper(?) ;";
-	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " where " + ATTR_ID_PRD
-			+ " = ? ;";
-	private static final String QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT = "select p.*,s.* from " + TABLE_NAME
-			+ " p , public.stock s where p." + ATTR_ID_PRD + " = s.idProductStock and p." + ATTR_QNT_MIN_PRD
-			+ " > s.quantite ";
+	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", " + ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD + ") VALUES (?, ?, ?, ?, ?, ?);";
+	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " p where p." + ATTR_LIB_PRD + " like ? ;";
+	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " where " + ATTR_ID_PRD + " = ? ;";
+	private static final String QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT = "select p.*,s.* from " + TABLE_NAME + " p , public.stock s where p." + ATTR_ID_PRD + " = s.idProductStock and p." + ATTR_QNT_MIN_PRD + " > s.quantite ";
 
 	private DAOFactory daoFactory;
 	private StockDAO stockDAO;
@@ -90,6 +84,38 @@ public class ProductDAOImpl implements ProductDAO {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.gms.dao.ProductDAO#findProducts(java.lang.String, boolean,
+	 * javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public List<Product> findProducts(String id, boolean isID, HttpServletRequest req) {
+		// isID = true => id
+		Connection cnx = null;
+		PreparedStatement pState = null;
+		ResultSet rSet = null;
+		List<Product> produits = null;
+		try {
+			cnx = daoFactory.getConnection();
+			if (isID) {
+				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_GET_PRODUCT_BY_ID, false, id);
+			} else {
+				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_GET_PRODUCT_BY_LIBELLE, false, id);
+			}
+			rSet = pState.executeQuery();
+			if (rSet.next()) {
+				produits = mapMultiProduct(rSet);
+			}
+		} catch (SQLException e) {
+			throw new DAOConfigurationException("Can't execute the query " + e);
+		} finally {
+			ServiceUtils.closeResources(cnx, pState, rSet);
+		}
+		return produits;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.gms.dao.ProductDAO#findProduct(java.lang.String,
 	 * java.lang.String)
 	 */
@@ -113,20 +139,16 @@ public class ProductDAOImpl implements ProductDAO {
 		Product prod = findProduct(produit.getLibelleProduct(), false, req);
 		if (prod == null) {
 			Calendar cal = Calendar.getInstance();
-			String idProduct = "prod/" + cal.get(Calendar.HOUR) + "-" + cal.get(Calendar.MINUTE) + "-"
-					+ cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.SECOND);
+			String idProduct = "prod/" + cal.get(Calendar.HOUR) + "-" + cal.get(Calendar.MINUTE) + "-" + cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.SECOND);
 			produit.setIdProduct(idProduct);
-			produit.setDateCreation(
-					cal.get(Calendar.DAY_OF_WEEK) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
+			produit.setDateCreation(cal.get(Calendar.DAY_OF_WEEK) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
 			try {
 				cnx = daoFactory.getConnection();
-				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_ADD_PRODUCT, false, produit.getLibelleProduct(),
-						(int) produit.getQuantiteMin(), produit.getDateCreation(), idProduct, produit.getPrize(),
-						produit.getReferences());
+				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_ADD_PRODUCT, false, produit.getLibelleProduct(), (int) produit.getQuantiteMin(), produit.getDateCreation(), idProduct, produit.getPrize(), produit.getReferences());
 				int status = pState.executeUpdate();
 				if (status == 0) {
 					throw new DAOException("Can't create the product !");
-				}else{
+				} else {
 					stockDAO.addToStock(produit, req);
 				}
 			} catch (SQLException e) {
@@ -135,7 +157,8 @@ public class ProductDAOImpl implements ProductDAO {
 				ServiceUtils.closeResources(cnx, pState);
 			}
 		} else {
-			//errorList.add(new ErrorObject("Erreur", "Produit exist dejas !"));
+			// errorList.add(new ErrorObject("Erreur", "Produit exist dejas
+			// !"));
 			stockDAO.addToStock(produit, req);
 		}
 	}
@@ -147,8 +170,9 @@ public class ProductDAOImpl implements ProductDAO {
 		ResultSet rSet = null;
 		try {
 			cnx = daoFactory.getConnection();
-			//pState = cnx.prepareStatement(QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT);
-			pState = cnx.prepareStatement( QUERY_GET_ALL_PRODUCTS);
+			// pState =
+			// cnx.prepareStatement(QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT);
+			pState = cnx.prepareStatement(QUERY_GET_ALL_PRODUCTS);
 			rSet = pState.executeQuery();
 			if (rSet != null) {
 				listeProduct = mapMultiProduct(rSet);

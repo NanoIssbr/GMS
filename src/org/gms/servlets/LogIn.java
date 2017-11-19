@@ -29,7 +29,7 @@ public class LogIn extends ServletObjectGMS {
 		if(session.getAttribute("_isSessionU") != null){
 			System.out.println("where in login servlet their is a session");
 			List<Product> prods = prodDAO.findProductByQuantite(request);
-			System.out.println(ServiceUtils.objectToJson(prods));
+			//System.out.println(ServiceUtils.objectToJson(prods));
 			List<Abonnement> abonnements = null;
 			try {
 				abonnements = abonnDAO.getAbonnements(request);

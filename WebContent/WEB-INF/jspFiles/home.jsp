@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/ico" href="image/favicon.ico">
-<title>IT ACQUISITION SYSTEM</title>
+<title>Home</title>
 <meta charset="utf-8" />
 <script src="././js/jquery.js"></script>
 <script src="././js/bootstrap.min.js"></script>
@@ -47,8 +47,9 @@
 			<li id="nr" style="color: white; cursor: pointer"
 				class="sidebar-brand">Produit</li>
 			<li id="lel"><a href="#"> Ajouter Produit </a></li>
-			<li id="dtel"><a href="#"> Modifier Produit </a></li>
+			<li id="dtel"><a href="#"> Modifier Stock </a></li>
 			<li id="allPrdBtn"><a href="#"> Visualisation du Stock </a></li>
+			<li id="sell"><a href="#"> Vente </a></li>
 			<li class="sidebar-brand"><a href="logOut" style="color: red;">
 					Logout </a></li>
 		</ul>
@@ -59,196 +60,124 @@
 	<br />
 	<br />
 	<div class="forms col-md-10">
-		<kbd class="">
-			<label class=""> Derniers abonnements </label>
-		</kbd>
-		<div id="dAbbon"></div>
-
-		<!-- ********************************************************** Dernier abonnement ********************************************* -->
-
-		<br />
-		<c:choose>
-			<c:when test="${requestScope.abonnements != null }">
-				<table class="table table-hover table-bordered"
-					style="border-collapse: collapse; color: white;">
-					<thead>
-						<tr>
-							<th>Client</th>
-							<th>Date Abonnement</th>
-							<th>Etat</th>
-						</tr>
-					</thead>
-					<c:forEach items="${ requestScope.abonnements }" var="abon">
-
-						<tr>
-							<td><c:out value="${ abon.getClient() }"></c:out></td>
-							<td><c:out value="${ abon.getDateAbonnement() }"></c:out></td>
-							<c:choose>
-								<c:when test="${ abon.isEtat() }">
-									<td><span class="open-blink"
-										style="background-color: red;"></span></td>
-								</c:when>
-								<c:otherwise>
-									<td><span class="open-blink"
-										style="background-color: green;"></span></td>
-								</c:otherwise>
-							</c:choose>
-						</tr>
-
-					</c:forEach>
-				</table>
-			</c:when>
-			<c:otherwise>
-				<c:out value="Aucun Abonnement !" />
-			</c:otherwise>
-		</c:choose>
-		<br /> <br />
-
 
 		<kbd class="">
-			<label class=""> Produits Manquants </label>
+			<label class=""> Tous les produits </label>
 		</kbd>
 		<div id="pManq">
-			<c:choose>
-				<c:when test="${ requestScope.prods != null }">
-					<table class="table table-hover table-bordered"
-						style="border-collapse: collapse; color: white;">
-						<thead>
-							<tr>
-								<th>Libelle</th>
-								<th>Prix</th>
-								<th>Reference</th>
-								<th>Etat</th>
-							</tr>
-						</thead>
-						<c:forEach items="${ requestScope.prods }" var="prod">
 
-							<tr>
-								<td><c:out value="${ prod.getLibelleProduct() }"></c:out></td>
-								<td><c:out value="${ prod.getPrize() }"></c:out></td>
-								<td><c:out value="${ prod.getReferences() }"></c:out></td>
-								<td><span class="open-blink" style="background-color: red;"></span></td>
-							</tr>
+			<form action="getAPRD" id="getAllPrds" method="post">
+				<input type="text" name="rPrd" class="form-control" id="rPrd"
+					placeholder="Libelle Produit" /> <span id="allProductShow"></span>
+				<input type="submit" name="submitAllPrds" class="btn btn-danger"
+					value="Submit" />
+			</form>
 
-						</c:forEach>
-					</table>
-				</c:when>
-				<c:otherwise>
-					<c:out value="Aucun produit manquant !" />
-				</c:otherwise>
-			</c:choose>
+			<!-- ********************************************************** Produits Manquant ********************************************* -->
 
 		</div>
-
-
-		<!-- ********************************************************** Produits Manquant ********************************************* -->
-
-	</div>
-	<br />
+		<br />
 
 
 
 
 
-	<!-- modal of new Product -->
-	<div class="container">
-		<div class="modal fade" id="myModal" role="dialog">
-			<div style="width: 600px;" class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header"
-						style="padding: 35px 50px; background-color: black;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">Ajout
-							produit</p>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<form action="newProduct" id="newPrd" method="post">
-							<label for="libelleProduct">Libelle produit</label> <input
-								type="text" name="libelleProduct" class="form-control"
-								id="libelleProduct" required="required" autofocus /> <label
-								for="qProduct">Quantité</label> <input type="number"
-								name="qProduct" class="form-control" id="qProduct" min="0"
-								required="required" /> <label for="qProduct">Réference</label>
-							<input type="text" name="rProduct" class="form-control"
-								id="rProduct" required="required" /> <label for="pProduct">Prix
-								Produit</label> <input type="number" name="pProduct"
-								class="form-control" min="0" id="pProduct" required="required" />
-							<br /> <input type="submit" name="submitNewProd"
-								class="btn btn-danger" value="Submit" /> <br /> <br />
-							<div class="alert alert-success alert-dismissible"
-								style="display: none;" role="alert">
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span style="color: black;" aria-hidden="true">&times;</span>
-								</button>
-								<strong>Info!</strong> <span id="infoMessage"></span>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- modal of new Abonnement -->
-	<div class="container">
-		<div class="modal fade" id="modalAbonnement" role="dialog">
-			<div style="width: 600px;" class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header"
-						style="padding: 35px 50px; background-color: black;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">Ajout
-							Abonnement</p>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<form action="newAbonnement" id="newAbn" method="post">
-							<label for="libelleProduct">Nom Client</label> <input type="text"
-								name="nClient" class="form-control" id="nClient"
-								required="required" autofocus /> <label for="qProduct">Date
-								Abonnement</label> <input type="date" name="dAbonnement"
-								class="form-control" id="dAbonnement" required="required" /> <br />
-							<input type="submit" name="submitNewAbo" class="btn btn-danger"
-								value="Submit" /> <br /> <br />
-							<div class="alert alert-success alert-dismissible"
-								style="display: none;" role="alert">
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span style="color: black;" aria-hidden="true">&times;</span>
-								</button>
-								<strong>Info!</strong> <span id="infoMessageABo"></span>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- modal of All products -->
-	<div class="container">
-		<div class="modal fade" id="allPrdMdl" role="dialog">
-			<div style="width: 600px;" class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header"
-						style="padding: 35px 50px; background-color: black;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">All
-							Product</p>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<div id="allPrd">
-							<form action="getAPRD" id="getAllPrds" method="post">
-								<span id="allProductShow"></span> <input type="submit"
-									name="submitAllPrds" class="btn btn-danger" value="Submit" />
+		<!-- modal of new Product -->
+		<div class="container">
+			<div class="modal fade" id="myModal" role="dialog">
+				<div style="width: 600px;" class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header"
+							style="padding: 35px 50px; background-color: black;">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<p id="elem" style="color: white; font-size: 18px;">Ajout
+								produit</p>
+						</div>
+						<div class="modal-body" style="padding: 40px 50px;">
+							<form action="newProduct" id="newPrd" method="post">
+								<label for="libelleProduct">Libelle produit</label> <input
+									type="text" name="libelleProduct" class="form-control"
+									id="libelleProduct" required="required" autofocus /> <label
+									for="qProduct">Quantité</label> <input type="number"
+									name="qProduct" class="form-control" id="qProduct" min="0"
+									required="required" /> <label for="qProduct">Réference</label>
+								<input type="text" name="rProduct" class="form-control"
+									id="rProduct" required="required" /> <label for="pProduct">Prix
+									Produit</label> <input type="number" name="pProduct"
+									class="form-control" min="0" id="pProduct" required="required" />
+								<br /> <input type="submit" name="submitNewProd"
+									class="btn btn-danger" value="Submit" /> <br /> <br />
+								<div class="alert alert-success alert-dismissible"
+									style="display: none;" role="alert">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span style="color: black;" aria-hidden="true">&times;</span>
+									</button>
+									<strong>Info!</strong> <span id="infoMessage"></span>
+								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
+		<!-- modal of new Abonnement -->
+		<div class="container">
+			<div class="modal fade" id="modalAbonnement" role="dialog">
+				<div style="width: 600px;" class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header"
+							style="padding: 35px 50px; background-color: black;">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<p id="elem" style="color: white; font-size: 18px;">Ajout
+								Abonnement</p>
+						</div>
+						<div class="modal-body" style="padding: 40px 50px;">
+							<form action="newAbonnement" id="newAbn" method="post">
+								<label for="libelleProduct">Nom Client</label> <input
+									type="text" name="nClient" class="form-control" id="nClient"
+									required="required" autofocus /> <label for="qProduct">Date
+									Abonnement</label> <input type="date" name="dAbonnement"
+									class="form-control" id="dAbonnement" required="required" /> <br />
+								<input type="submit" name="submitNewAbo" class="btn btn-danger"
+									value="Submit" /> <br /> <br />
+								<div class="alert alert-success alert-dismissible"
+									style="display: none;" role="alert">
+									<button type="button" class="close" data-dismiss="alert"
+										aria-label="Close">
+										<span style="color: black;" aria-hidden="true">&times;</span>
+									</button>
+									<strong>Info!</strong> <span id="infoMessageABo"></span>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
+		<!-- modal of All products -->
+		<div class="container">
+			<div class="modal fade" id="venteModal" role="dialog">
+				<div style="width: 600px;" class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header" style="padding: 35px 50px; background-color: black;">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<p id="" style="color: white; font-size: 18px;">Vente</p>
+						</div>
+						<div class="modal-body" style="padding: 40px 50px;">
+							<div id="allPrdModal">
+								<form action="getAPRDTS" id="getAllPrdsModal" method="post">
+									<input type="text" name="rPrdModal" class="form-control" id="rPrdModal" placeholder="Libelle Produit" />
+									<span id="allProductShowModal"></span>
+									<input type="submit" name="submitAllPrdsModal" class="btn btn-danger" value="Submit" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>

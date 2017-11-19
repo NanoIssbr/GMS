@@ -12,6 +12,9 @@ $(document).ready(function() {
 	$("#adm1").click(function() {
 		$("#modalAbonnement").modal();
 	});
+	$("#sell").click(function() {
+		$("#venteModal").modal();
+	});
 	$('#allPrdBtn').click(function() {
 		$('#allPrdMdl').modal();
 	});
@@ -52,13 +55,42 @@ $(document).ready(function() {
 		$.post($form.attr("action"), $form.serialize(), function(response) {
 			if (response != null) {
 				console.log('im logging herer');
-				//$form.trigger("reset");
+				$form.trigger("reset");
 				$('#allProductShow').html(response);
 			} else {
 				console.log('no response');
 			}
 		});
 
+		event.preventDefault(); // Important! Prevents submitting the form.
+	});
+	
+	// get All product ajax request from modal
+	$(document).on("submit", "#getAllPrdsModal", function(event) {
+		var $form = $(this);
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			if (response != null) {
+				console.log('im logging here modal vente');
+				$form.trigger("reset");
+				$('#allProductShowModal').html(response);
+			} else {
+				console.log('no response');
+			}
+		});
+		event.preventDefault(); // Important! Prevents submitting the form.
+	});
+	// get All product ajax request from modal
+	$(document).on("submit", "#getAllPrdsModal", function(event) {
+		var $form = $(this);
+		$.post($form.attr("action"), $form.serialize(), function(response) {
+			if (response != null) {
+				console.log('im logging here modal vente');
+				$form.trigger("reset");
+				$('#allProductShowModal').html(response);
+			} else {
+				console.log('no response');
+			}
+		});
 		event.preventDefault(); // Important! Prevents submitting the form.
 	});
 
