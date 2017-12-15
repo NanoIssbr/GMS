@@ -29,13 +29,16 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String ATTR_REF_PRD = "reference";
 	private static final String ATTR_PRIZE_PRD = "prize";
 	private static final String ATTR_QNT_MIN_PRD = "qntmin";
+	private static final String ATTR_QNT_PRD_STOCK = "quantite";
+	private static final String ATTR_ID_PRD_STOCK = "idproductstock";
 
 	private static final String QUERY_GET_ALL_PRODUCTS = "select * from public.product";
+	private static final String QUERY_GET_ALL_PRODUCTS_STOCK = "select * from public.product p, public.stock s where p."+ATTR_ID_PRD+" = s."+ATTR_ID_PRD_STOCK+";";
 	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", " + ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD + ") VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " p where p." + ATTR_LIB_PRD + " like ? ;";
 	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " where " + ATTR_ID_PRD + " = ? ;";
 	private static final String QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT = "select p.*,s.* from " + TABLE_NAME + " p , public.stock s where p." + ATTR_ID_PRD + " = s.idProductStock and p." + ATTR_QNT_MIN_PRD + " > s.quantite ";
-
+	
 	private DAOFactory daoFactory;
 	private StockDAO stockDAO;
 
@@ -172,10 +175,10 @@ public class ProductDAOImpl implements ProductDAO {
 			cnx = daoFactory.getConnection();
 			// pState =
 			// cnx.prepareStatement(QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT);
-			pState = cnx.prepareStatement(QUERY_GET_ALL_PRODUCTS);
+			pState = cnx.prepareStatement(QUERY_GET_ALL_PRODUCTS_STOCK);
 			rSet = pState.executeQuery();
 			if (rSet != null) {
-				listeProduct = mapMultiProduct(rSet);
+				listeProduct = mapMultiProductWithStock(rSet);
 			}
 
 		} catch (SQLException e) {
@@ -258,6 +261,11 @@ public class ProductDAOImpl implements ProductDAO {
 		return produit;
 	}
 
+	/**
+	 * @param rSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private List<Product> mapMultiProduct(ResultSet rSet) throws SQLException {
 		List<Product> listProduct = new ArrayList<Product>();
 		Product product = null;
@@ -269,6 +277,27 @@ public class ProductDAOImpl implements ProductDAO {
 			product.setReferences(rSet.getString(ATTR_REF_PRD));
 			product.setPrize(rSet.getDouble(ATTR_PRIZE_PRD));
 			product.setQuantiteMin(rSet.getInt(ATTR_QNT_MIN_PRD));
+			listProduct.add(product);
+		}
+		return listProduct;
+	}
+	/**
+	 * @param rSet
+	 * @return
+	 * @throws SQLException
+	 */
+	private List<Product> mapMultiProductWithStock(ResultSet rSet) throws SQLException {
+		List<Product> listProduct = new ArrayList<Product>();
+		Product product = null;
+		while (rSet.next()) {
+			product = new Product();
+			product.setIdProduct(rSet.getString(ATTR_ID_PRD));
+			product.setLibelleProduct(rSet.getString(ATTR_LIB_PRD));
+			product.setDateCreation(rSet.getString(ATTR_DATE_PRD));
+			product.setReferences(rSet.getString(ATTR_REF_PRD));
+			product.setPrize(rSet.getDouble(ATTR_PRIZE_PRD));
+			product.setQuantiteMin(rSet.getInt(ATTR_QNT_MIN_PRD));
+			product.setQnt(rSet.getInt(ATTR_QNT_PRD_STOCK));
 			listProduct.add(product);
 		}
 		return listProduct;

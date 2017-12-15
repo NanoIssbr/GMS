@@ -34,6 +34,14 @@ public class GetAllProductToSell extends ServletObjectGMS {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("tessssssssssssssssssssssssssssssssssssssssssssssst");
 		Product prdSearch = ServiceUtils.getSearchPrdLibelleFormModal(request);
 		List<Product> listPrds = null;
@@ -46,17 +54,10 @@ public class GetAllProductToSell extends ServletObjectGMS {
 		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
 		Map<String, Object> map = null;
 		if (listPrds != null) {
-			listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds);
+			listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.FALSE);
 		}
 		response.getWriter().print(ServiceUtils.listToHTMLTableSell(listToConvertToHtmlTable));
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		System.out.println("tessssssssssssssssssssssssssssssssssssssssssssssst 2");
 	}
 
 }

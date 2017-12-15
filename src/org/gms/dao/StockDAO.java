@@ -17,4 +17,11 @@ public interface StockDAO {
 	 * @param req
 	 */
 	public void addToStock(Object prd, HttpServletRequest req);
+	/**
+	 * remove element from stock by product
+	 * @param prd produit to add
+	 * @param stock information stock
+	 * @param req
+	 */
+	public void getOutFromStock(Object prd, HttpServletRequest req);
 }

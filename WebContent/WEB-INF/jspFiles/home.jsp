@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-	<div id="fullscreen_bg" class="fullscreen_bg"></div>
+		<div id="fullscreen_bg" class="fullscreen_bg"></div>
 	<div class="header col-md-12">
 		<p class="deptitle col-md-11"
 			style="text-align: center; color: #FFFFFF">
@@ -47,8 +47,7 @@
 			<li id="nr" style="color: white; cursor: pointer"
 				class="sidebar-brand">Produit</li>
 			<li id="lel"><a href="#"> Ajouter Produit </a></li>
-			<li id="dtel"><a href="#"> Modifier Stock </a></li>
-			<li id="allPrdBtn"><a href="#"> Visualisation du Stock </a></li>
+			<li id="updPrdKey"><a href="#"> Modifier Stock </a></li>
 			<li id="sell"><a href="#"> Vente </a></li>
 			<li class="sidebar-brand"><a href="logOut" style="color: red;">
 					Logout </a></li>
@@ -162,19 +161,39 @@
 			<div class="modal fade" id="venteModal" role="dialog">
 				<div style="width: 600px;" class="modal-dialog">
 					<div class="modal-content">
-						<div class="modal-header" style="padding: 35px 50px; background-color: black;">
+						<div class="modal-header"
+							style="padding: 35px 50px; background-color: black;">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<p id="" style="color: white; font-size: 18px;">Vente</p>
 						</div>
 						<div class="modal-body" style="padding: 40px 50px;">
 							<div id="allPrdModal">
 								<form action="getAPRDTS" id="getAllPrdsModal" method="post">
-									<input type="text" name="rPrdModal" class="form-control" id="rPrdModal" placeholder="Libelle Produit" />
-									<span id="allProductShowModal"></span>
-									<input type="submit" name="submitAllPrdsModal" class="btn btn-danger" value="Submit" />
+									<input type="text" name="rPrdModal" class="form-control"
+										id="rPrdModal" placeholder="Libelle Produit" /> <span
+										id="allProductShowModal"></span> <input type="submit"
+										name="submitAllPrdsModal" class="btn btn-danger"
+										value="Submit" />
 								</form>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- modal of new Product -->
+		<div class="container">
+			<div class="modal fade" id="modalUpdatePrdOnStock" role="dialog">
+				<div style="width: 600px;" class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header"
+							style="padding: 35px 50px; background-color: black;">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<p id="elem" style="color: white; font-size: 18px;">Ajout
+								produit</p>
+						</div>
+						<div class="modal-body" style="padding: 40px 50px;"></div>
 					</div>
 				</div>
 			</div>

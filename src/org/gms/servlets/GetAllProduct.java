@@ -34,26 +34,26 @@ public class GetAllProduct extends ServletObjectGMS {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Product prdSearch = ServiceUtils.getSearchPrdLibelleForm(request);
-		List<Product> listPrds = null;
-		if (prdSearch.getLibelleProduct() != null) {
-			listPrds = prodDAO.findProducts(prdSearch.getLibelleProduct(), false, request);
-		} else {
-			listPrds = prodDAO.getAllProduct(request);
-		}
-
-		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
-		Map<String, Object> map = null;
-		if (listPrds != null) {
-			for (Product prd : listPrds) {
-				map = new HashMap<String, Object>();
-				map.put("libelle", prd.getLibelleProduct());
-				map.put("prix", prd.getPrize());
-				map.put("ref", prd.getReferences());
-				listToConvertToHtmlTable.add((HashMap<String, Object>) map);
-			}
-		}
-		response.getWriter().print(ServiceUtils.listToHTMLTable(listToConvertToHtmlTable));
+//		Product prdSearch = ServiceUtils.getSearchPrdLibelleForm(request);
+//		List<Product> listPrds = null;
+//		if (prdSearch.getLibelleProduct() != null) {
+//			listPrds = prodDAO.findProducts(prdSearch.getLibelleProduct(), false, request);
+//		} else {
+//			listPrds = prodDAO.getAllProduct(request);
+//		}
+//
+//		List<HashMap<String, Object>> listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds);
+////		Map<String, Object> map = null;
+////		if (listPrds != null) {
+////			for (Product prd : listPrds) {
+////				map = new HashMap<String, Object>();
+////				map.put("libelle", prd.getLibelleProduct());
+////				map.put("prix", prd.getPrize());
+////				map.put("ref", prd.getReferences());
+////				listToConvertToHtmlTable.add((HashMap<String, Object>) map);
+////			}
+////		}
+//		response.getWriter().print(ServiceUtils.listToHTMLTable(listToConvertToHtmlTable));
 	}
 
 	/**
@@ -67,20 +67,20 @@ public class GetAllProduct extends ServletObjectGMS {
 		if (prdSearch.getLibelleProduct() != null) {
 			listPrds = prodDAO.findProducts(prdSearch.getLibelleProduct(), false, request);
 		} else {
-			listPrds = prodDAO.getAllProduct(request);
+			listPrds = prodDAO.findProductByQuantite(request);
 		}
 
-		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
-		Map<String, Object> map = null;
-		if (listPrds != null) {
-			for (Product prd : listPrds) {
-				map = new HashMap<String, Object>();
-				map.put("libelle", prd.getLibelleProduct());
-				map.put("prix", prd.getPrize());
-				map.put("ref", prd.getReferences());
-				listToConvertToHtmlTable.add((HashMap<String, Object>) map);
-			}
-		}
+		List<HashMap<String, Object>> listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.TRUE);
+//		Map<String, Object> map = null;
+//		if (listPrds != null) {
+//			for (Product prd : listPrds) {
+//				map = new HashMap<String, Object>();
+//				map.put("libelle", prd.getLibelleProduct());
+//				map.put("prix", prd.getPrize());
+//				map.put("ref", prd.getReferences());
+//				listToConvertToHtmlTable.add((HashMap<String, Object>) map);
+//			}
+//		}
 		response.getWriter().print(ServiceUtils.listToHTMLTable(listToConvertToHtmlTable));
 	}
 

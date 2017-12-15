@@ -1,10 +1,6 @@
 package org.gms.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +31,10 @@ public class SellIT extends ServletObjectGMS {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Product prd = ServiceUtils.getProductIDToSell(request);
-		System.out.println(prd);
+		System.out.println("         from GET PRD ??");
+		System.out.println(prd.getIdProduct());
+		System.out.println("         from GET PRD ??");
+		
 	}
 
 	/**
