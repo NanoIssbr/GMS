@@ -93,5 +93,8 @@ public class DAOFactory {
 	public AbonnementDAO getAbonnementDAO(){
 		return new AbonnementDAOImp(this);
 	}
+	public StockDAO getStockDAO(){
+		return new StockDAOImpl(this);
+	}
 
 }

@@ -70,17 +70,7 @@ public class GetAllProduct extends ServletObjectGMS {
 			listPrds = prodDAO.findProductByQuantite(request);
 		}
 
-		List<HashMap<String, Object>> listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.TRUE);
-//		Map<String, Object> map = null;
-//		if (listPrds != null) {
-//			for (Product prd : listPrds) {
-//				map = new HashMap<String, Object>();
-//				map.put("libelle", prd.getLibelleProduct());
-//				map.put("prix", prd.getPrize());
-//				map.put("ref", prd.getReferences());
-//				listToConvertToHtmlTable.add((HashMap<String, Object>) map);
-//			}
-//		}
+		List<HashMap<String, Object>> listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.TRUE, Boolean.FALSE);
 		response.getWriter().print(ServiceUtils.listToHTMLTable(listToConvertToHtmlTable));
 	}
 

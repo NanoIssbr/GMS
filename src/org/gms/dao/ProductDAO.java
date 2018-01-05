@@ -53,6 +53,6 @@ public interface ProductDAO {
 	 * @param req
 	 * @return
 	 */
-	public List<Product> getAllProduct(HttpServletRequest req);
+	public List<Product> getAllProduct(HttpServletRequest req, Boolean withQnt);
 	
 }

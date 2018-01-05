@@ -120,5 +120,10 @@ public class Product {
 	public Product() {
 		
 	}
-
+	
+	public void getProductOuFromStock(Integer qnt){
+		if(this.getQnt() != null && (this.getQnt() - qnt) >= 0 ){
+			this.setQnt(this.getQnt() - qnt);
+		}
+	}
 }

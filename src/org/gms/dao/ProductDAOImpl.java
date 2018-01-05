@@ -32,7 +32,7 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String ATTR_QNT_PRD_STOCK = "quantite";
 	private static final String ATTR_ID_PRD_STOCK = "idproductstock";
 
-	private static final String QUERY_GET_ALL_PRODUCTS = "select * from public.product";
+	private static final String QUERY_GET_ALL_PRODUCTS = "select * from stock s, product p where s.idproductstock = p.idproduct and s.quantite > 0;";
 	private static final String QUERY_GET_ALL_PRODUCTS_STOCK = "select * from public.product p, public.stock s where p."+ATTR_ID_PRD+" = s."+ATTR_ID_PRD_STOCK+";";
 	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", " + ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD + ") VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " p where p." + ATTR_LIB_PRD + " like ? ;";
@@ -106,7 +106,7 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 			rSet = pState.executeQuery();
 			if (rSet.next()) {
-				produits = mapMultiProduct(rSet);
+				produits = mapMultiProduct(rSet, Boolean.FALSE);
 			}
 		} catch (SQLException e) {
 			throw new DAOConfigurationException("Can't execute the query " + e);
@@ -207,7 +207,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 * HttpServletRequest)
 	 */
 	@Override
-	public List<Product> getAllProduct(HttpServletRequest req) {
+	public List<Product> getAllProduct(HttpServletRequest req, Boolean withQnt) {
 		List<Product> listeProducts = new ArrayList<Product>();
 		Connection cnx = null;
 		PreparedStatement pState = null;
@@ -217,7 +217,7 @@ public class ProductDAOImpl implements ProductDAO {
 			pState = cnx.prepareStatement(QUERY_GET_ALL_PRODUCTS);
 			rSet = pState.executeQuery();
 			if (rSet != null) {
-				listeProducts = mapMultiProduct(rSet);
+				listeProducts = mapMultiProduct(rSet, Boolean.TRUE);
 			}
 
 		} catch (SQLException e) {
@@ -266,7 +266,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	private List<Product> mapMultiProduct(ResultSet rSet) throws SQLException {
+	private List<Product> mapMultiProduct(ResultSet rSet, Boolean withQnt) throws SQLException {
 		List<Product> listProduct = new ArrayList<Product>();
 		Product product = null;
 		while (rSet.next()) {
@@ -277,6 +277,9 @@ public class ProductDAOImpl implements ProductDAO {
 			product.setReferences(rSet.getString(ATTR_REF_PRD));
 			product.setPrize(rSet.getDouble(ATTR_PRIZE_PRD));
 			product.setQuantiteMin(rSet.getInt(ATTR_QNT_MIN_PRD));
+			if(withQnt == Boolean.TRUE){
+				product.setQnt(rSet.getInt(ATTR_QNT_PRD_STOCK));
+			}
 			listProduct.add(product);
 		}
 		return listProduct;

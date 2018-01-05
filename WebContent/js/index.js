@@ -6,7 +6,7 @@ $(document).ready(function() {
 		$("#modalUpdatePrdOnStock").modal();
 	});
 	$("#sell").click(function() {
-		$("#modalUpdatePrdOnStock").modal();
+		$("#venteModal").modal();
 	});
 });
 
@@ -47,20 +47,20 @@ $(document).on("submit", "#getAllPrds", function(event) {
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
 
-// get All product ajax request from modal
-$(document).on("submit", "#getAllPrdsModal", function(event) {
-	var $form = $(this);
-	$.post($form.attr("action"), $form.serialize(), function(response) {
-		if (response != null) {
-			console.log('im logging here modal vente');
-			$form.trigger("reset");
-			$('#allProductShowModal').html(response);
-		} else {
-			console.log('no response');
-		}
-	});
-	event.preventDefault(); // Important! Prevents submitting the form.
-});
+//// get All product ajax request from modal
+//$(document).on("submit", "#getAllPrdsModal", function(event) {
+//	var $form = $(this);
+//	$.post($form.attr("action"), $form.serialize(), function(response) {
+//		if (response != null) {
+//			console.log('im logging here modal vente');
+//			$form.trigger("reset");
+//			$('#allProductShowModal').html(response);
+//		} else {
+//			console.log('no response');
+//		}
+//	});
+//	event.preventDefault(); // Important! Prevents submitting the form.
+//});
 // get All product ajax request from modal
 $(document).on("submit", "#getAllPrdsModal", function(event) {
 	var $form = $(this);

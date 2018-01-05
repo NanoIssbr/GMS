@@ -64,13 +64,15 @@ public class StockDAOImpl implements StockDAO {
 	 * javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	public void getOutFromStock(Object prd, HttpServletRequest req) {
+	public void sellFromStock(Product prd, Integer qnt, HttpServletRequest req) {
 		Connection cnx = null;
 		PreparedStatement pState = null;
-		if (prd != null && prd instanceof Product) {
+		if (prd != null) {
 			try {
+//				Product produit = prd;
+				prd.getProductOuFromStock(qnt);
 				cnx = daoFactory.getConnection();
-				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_GET_OUT_FROM_STOCK, false, ((Product) prd).getQnt(), ((Product) prd).getIdProduct());
+				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_GET_OUT_FROM_STOCK, false, prd.getQnt(), prd.getIdProduct());
 				int status = pState.executeUpdate();
 				if (status == 0) {
 					throw new DAOException("Can't get out from stock!");
@@ -85,6 +87,10 @@ public class StockDAOImpl implements StockDAO {
 			System.out.println("ttttttttttttttt null values StockDAOImpl.addToStock");
 			throw new DAOException("Can't add to stock !");
 		}
+	}
+	
+	public StockDAOImpl(DAOFactory df){
+		this.daoFactory = df;
 	}
 
 }

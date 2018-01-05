@@ -48,15 +48,15 @@ public class GetAllProductToSell extends ServletObjectGMS {
 		if (prdSearch.getLibelleProduct() != null) {
 			listPrds = prodDAO.findProducts(prdSearch.getLibelleProduct(), false, request);
 		} else {
-			listPrds = prodDAO.getAllProduct(request);
+			listPrds = prodDAO.getAllProduct(request, Boolean.TRUE);
 		}
 
 		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
 		Map<String, Object> map = null;
 		if (listPrds != null) {
-			listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.FALSE);
+			listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.TRUE, Boolean.TRUE);
 		}
-		response.getWriter().print(ServiceUtils.listToHTMLTableSell(listToConvertToHtmlTable));
+		response.getWriter().print(ServiceUtils.listToHTMLTableSell(listToConvertToHtmlTable, Boolean.TRUE));
 		System.out.println("tessssssssssssssssssssssssssssssssssssssssssssssst 2");
 	}
 

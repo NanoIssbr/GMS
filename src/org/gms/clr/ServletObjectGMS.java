@@ -13,6 +13,7 @@ import org.gms.beans.ErrorObject;
 import org.gms.dao.AbonnementDAO;
 import org.gms.dao.DAOFactory;
 import org.gms.dao.ProductDAO;
+import org.gms.dao.StockDAO;
 
 public class ServletObjectGMS extends HttpServlet {
 	public static final String URI_INDEX_PAGE = "/index.jsp";
@@ -21,6 +22,7 @@ public class ServletObjectGMS extends HttpServlet {
 	public ProductDAO prodDAO;
 	public AbonnementDAO abonnDAO;
 	public DAOFactory daoFactory;
+	public StockDAO stockDAO;
 	/**
 	 * 
 	 */
@@ -45,6 +47,7 @@ public class ServletObjectGMS extends HttpServlet {
 	public void init() throws ServletException{
     	this.prodDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getProductDAO();
     	this.abonnDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getAbonnementDAO();
+    	this.stockDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getStockDAO();
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

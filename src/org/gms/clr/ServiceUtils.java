@@ -179,7 +179,7 @@ public class ServiceUtils {
 	}
 
 	public static StringBuffer listToHTMLTable(List<HashMap<String, Object>> listObj) {
-		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: white;\"><thead><tr><th>Reference</th><th>Prix</th><th>Libelle</th><th>Quantite</th></tr></thead>");
+		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: white;\"><thead><tr><th>Reference</th><th>Prix</th><th>Quantite</th><th>Libelle</th></tr></thead>");
 		for (HashMap<String, Object> map : listObj) {
 			// tableWithData.append("<tr><td></td><td></td><td></td></tr>");
 			tableWithData.append("<tr>");
@@ -197,11 +197,19 @@ public class ServiceUtils {
 	 * @param listObj
 	 * @return
 	 */
-	public static StringBuffer listToHTMLTableSell(List<HashMap<String, Object>> listObj) {
-		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Reference</th><th>Prix</th><th>Libelle</th><th>Vendre</th></tr></thead>");
+	public static StringBuffer listToHTMLTableSell(List<HashMap<String, Object>> listObj, Boolean withQnt) {
+		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Reference</th><th>Prix</th>");
+		
+		if(withQnt == Boolean.TRUE){
+			tableWithData.append("<th>Quantite</th>");
+		}
+		tableWithData.append("<th>Libelle</th><th>Vendre</th></tr></thead>");
 		for (HashMap<String, Object> map : listObj) {
 			tableWithData.append("<tr>");
 			for (String key : map.keySet()) {
+				if(key.equals("n")){
+					continue;
+				}
 				tableWithData.append("<td>" + map.get(key) + "</td>");
 			}
 			tableWithData.append("<td><a  href=\"vendre?n="+map.get("n")+"\">Vente</a></td>");
@@ -212,7 +220,7 @@ public class ServiceUtils {
 		return tableWithData;
 	}
 
-	public static List<HashMap<String, Object>> getListOfMapByProduct(List<Product> listPrds, Boolean withQnt) {
+	public static List<HashMap<String, Object>> getListOfMapByProduct(List<Product> listPrds, Boolean withQnt, Boolean withId) {
 		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
 		Map<String , Object> map = null;
 		for (Product prd : listPrds) {
@@ -220,7 +228,9 @@ public class ServiceUtils {
 			map.put("libelle", prd.getLibelleProduct());
 			map.put("prix", prd.getPrize());
 			map.put("ref", prd.getReferences());
-			map.put("n", prd.getIdProduct());
+			if(withId == Boolean.TRUE){
+				map.put("n", prd.getIdProduct());
+			}
 			if(withQnt == Boolean.TRUE){
 				map.put("qnt", prd.getQnt());
 			}
