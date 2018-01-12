@@ -36,9 +36,9 @@
 	<div class="header col-md-12">
 		<p class="deptitle col-md-11"
 			style="text-align: center; color: #FFFFFF">
-			<br /> <strong>GOLDEN MEDIA SAT<br />Gestion de stock<br />
-				<c:out value="${sessionScope._isSessionU.getUserName()}"></c:out>
-			</strong>
+			<br /> <strong><a href="/GestionStock_1/logIn">GOLDEN
+					MEDIA SAT</a><br />Gestion de stock<br /> <c:out
+					value="${sessionScope._isSessionU.getUserName()}"></c:out> </strong>
 		</p>
 	</div>
 	<!-- sideBarre begin -->
@@ -48,7 +48,10 @@
 				class="sidebar-brand">Produit</li>
 			<li id="lel"><a href="#"> Ajouter Produit </a></li>
 			<li id="updPrdKey"><a href="#"> Modifier Stock </a></li>
-			<li id="sell"><a href="#"> Vente </a></li>
+			<li id="nr1" style="color: white; cursor: pointer"
+				class="sidebar-brand">Vente</li>
+				<li id="sell"><a href="#"> Vendre </a></li>
+			<li id="hstVente"><a href="#"> Historique </a></li>
 			<li class="sidebar-brand"><a href="logOut" style="color: red;">
 					Logout </a></li>
 		</ul>
@@ -89,8 +92,7 @@
 					<div class="modal-header"
 						style="padding: 35px 50px; background-color: black;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">Ajout
-							produit</p>
+						<p id="" style="color: white; font-size: 18px;">Ajout produit</p>
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;">
 						<form action="newProduct" id="newPrd" method="post">
@@ -129,7 +131,7 @@
 					<div class="modal-header"
 						style="padding: 35px 50px; background-color: black;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">Ajout
+						<p id="" style="color: white; font-size: 18px;">Ajout
 							Abonnement</p>
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;">
@@ -159,7 +161,7 @@
 	<!-- modal vente -->
 	<div class="container">
 		<div class="modal fade" id="venteModal" role="dialog">
-			<div style="width: 600px;" class="modal-dialog">
+			<div style="width: 900px;" class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header"
 						style="padding: 35px 50px; background-color: black;">
@@ -181,7 +183,7 @@
 		</div>
 	</div>
 
-	<!-- modal of new Product -->
+	<!-- modal for Product update -->
 	<div class="container">
 		<div class="modal fade" id="modalUpdatePrdOnStock" role="dialog">
 			<div style="width: 600px;" class="modal-dialog">
@@ -189,13 +191,37 @@
 					<div class="modal-header"
 						style="padding: 35px 50px; background-color: black;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<p id="elem" style="color: white; font-size: 18px;">Ajout
-							produit</p>
+						<p id="" style="color: white; font-size: 18px;">Modifier des
+							produits</p>
 					</div>
 					<div class="modal-body" style="padding: 40px 50px;"></div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	<!-- modal historique des ventes -->
+	<div class="container">
+		<div class="modal fade" id="modalSellHistory" role="dialog">
+			<div style="width: 600px;" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"
+						style="padding: 35px 50px; background-color: black;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<p id="" style="color: white; font-size: 18px;">Historique des
+							ventes</p>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<form action="getHistSell" id="getHistSellForm" method="post">
+							<span id="sellHistModalShow"></span> 
+							<input type="submit" name="submitSellOperationHistory" class="btn btn-danger" value="Submit" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

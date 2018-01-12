@@ -96,5 +96,8 @@ public class DAOFactory {
 	public StockDAO getStockDAO(){
 		return new StockDAOImpl(this);
 	}
+	public SellDAO getSellDAO(){
+		return new SellDAOImp(this);
+	}
 
 }

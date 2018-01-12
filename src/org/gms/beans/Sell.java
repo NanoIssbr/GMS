@@ -11,9 +11,10 @@ import java.util.Calendar;
  */
 public class Sell {
 	private String idProduct;
-	private Calendar dateSell;
+	private String dateSell;
 	private Integer qnt;
 	private Double prizeSell;
+	private String libelleProduct;
 	public String getIdProduct() {
 		return idProduct;
 	}
@@ -26,13 +27,13 @@ public class Sell {
 	/**
 	 * @return
 	 */
-	public Calendar getDateSell() {
+	public String getDateSell() {
 		return dateSell;
 	}
 	/**
 	 * @param dateSell
 	 */
-	public void setDateSell(Calendar dateSell) {
+	public void setDateSell(String dateSell) {
 		this.dateSell = dateSell;
 	}
 	/**
@@ -54,11 +55,23 @@ public class Sell {
 		this.prizeSell = prize;
 	}
 	/**
+	 * @return the libelleProduct
+	 */
+	public String getLibelleProduct() {
+		return libelleProduct;
+	}
+	/**
+	 * @param libelleProduct the libelleProduct to set
+	 */
+	public void setLibelleProduct(String libelleProduct) {
+		this.libelleProduct = libelleProduct;
+	}
+	/**
 	 * @param idProduct
 	 * @param dateSell
 	 * @param qnt
 	 */
-	public Sell(String idProduct, Calendar dateSell, Integer qnt, Double prize) {
+	public Sell(String idProduct, String dateSell, Integer qnt, Double prize) {
 		super();
 		this.idProduct = idProduct;
 		this.dateSell = dateSell;

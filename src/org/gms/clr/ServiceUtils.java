@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.gms.beans.ErrorObject;
 import org.gms.beans.Product;
+import org.gms.beans.Sell;
 import org.gms.beans.Users;
 
 import com.google.gson.Gson;
@@ -35,7 +38,26 @@ public class ServiceUtils {
 	public ServiceUtils() {
 
 	}
-
+	/**
+	 * @param date
+	 * @param separator
+	 * @return
+	 */
+	public static String dateToString(Date date, String separator)
+	  {
+	    String formattedDate = null;
+	    if (date != null) {
+	      GregorianCalendar grCal = new GregorianCalendar();
+	      grCal.setTime(date);
+	      int year = grCal.get(1);
+	      int month = grCal.get(2);
+	      int day = grCal.get(5);
+	      System.out.println(grCal.get(12));
+	      month++;
+	      formattedDate = day + separator + month + separator + year + " " + grCal.get(6) + ":" + grCal.get(12);
+	    }
+	    return formattedDate;
+	  }
 	/**
 	 * @param data
 	 * @return
@@ -79,7 +101,8 @@ public class ServiceUtils {
 	
 	public static Product getProductIDToSell(HttpServletRequest req) {
 		Product produit = new Product();
-		produit.setIdProduct((String)req.getParameter(ID_FROM_URI_TO_SELL));
+		produit.setIdProduct(req.getParameter(ID_FROM_URI_TO_SELL));
+		//produit.setPrize(Double.valueOf(req.getParameter("p")));
 		return produit;
 	}
 
@@ -199,11 +222,10 @@ public class ServiceUtils {
 	 */
 	public static StringBuffer listToHTMLTableSell(List<HashMap<String, Object>> listObj, Boolean withQnt) {
 		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Reference</th><th>Prix</th>");
-		
 		if(withQnt == Boolean.TRUE){
 			tableWithData.append("<th>Quantite</th>");
 		}
-		tableWithData.append("<th>Libelle</th><th>Vendre</th></tr></thead>");
+		tableWithData.append("<th>Libelle</th><th>Prix vente</th><th>Vendre</th></tr></thead>");
 		for (HashMap<String, Object> map : listObj) {
 			tableWithData.append("<tr>");
 			for (String key : map.keySet()) {
@@ -212,7 +234,29 @@ public class ServiceUtils {
 				}
 				tableWithData.append("<td>" + map.get(key) + "</td>");
 			}
-			tableWithData.append("<td><a  href=\"vendre?n="+map.get("n")+"\">Vente</a></td>");
+			tableWithData.append("<td><input type=\"number\" name=\"qProduct\" class=\"form-control\" id=\""+map.get("n")+"\" min=\"0\" required=\"required\" /></td>");
+			tableWithData.append("<td><a id=\"a"+map.get("n")+"\"onClick=\"\" href=\"vendre?n="+map.get("n")+"\">Vente</a></td>");
+			tableWithData.append("</tr>");
+
+		}
+		tableWithData.append("</table>");
+		return tableWithData;
+	}
+	
+	
+	
+	
+	/**
+	 * @param listObj
+	 * @return
+	 */
+	public static StringBuffer listToHTMLTableSellOperations(List<HashMap<String, Object>> listObj) {
+		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Libelle</th><th>Date vente</th><th>Prix</th><th>Quantite</th>");
+		for (HashMap<String, Object> map : listObj) {
+			tableWithData.append("<tr>");
+			for (String key : map.keySet()) {
+				tableWithData.append("<td>" + map.get(key) + "</td>");
+			}
 			tableWithData.append("</tr>");
 
 		}
@@ -220,6 +264,12 @@ public class ServiceUtils {
 		return tableWithData;
 	}
 
+	/**
+	 * @param listPrds
+	 * @param withQnt
+	 * @param withId
+	 * @return
+	 */
 	public static List<HashMap<String, Object>> getListOfMapByProduct(List<Product> listPrds, Boolean withQnt, Boolean withId) {
 		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
 		Map<String , Object> map = null;
@@ -234,6 +284,27 @@ public class ServiceUtils {
 			if(withQnt == Boolean.TRUE){
 				map.put("qnt", prd.getQnt());
 			}
+			listToConvertToHtmlTable.add((HashMap<String, Object>) map);
+		}
+		return listToConvertToHtmlTable;
+	}
+	
+	
+	/**
+	 * @param listPrds
+	 * @param withQnt
+	 * @param withId
+	 * @return
+	 */
+	public static List<HashMap<String, Object>> getListOfMapBySell(List<Sell> listSellsOperations) {
+		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
+		Map<String , Object> map = null;
+		for (Sell vente : listSellsOperations) {
+			map = new HashMap<String, Object>();
+			map.put("libelle", vente.getQnt());
+			map.put("prix", vente.getDateSell());
+			map.put("qnt", vente.getPrize());
+			map.put("date", vente.getLibelleProduct());
 			listToConvertToHtmlTable.add((HashMap<String, Object>) map);
 		}
 		return listToConvertToHtmlTable;

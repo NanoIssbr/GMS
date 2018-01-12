@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -52,7 +51,6 @@ public class GetAllProductToSell extends ServletObjectGMS {
 		}
 
 		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
-		Map<String, Object> map = null;
 		if (listPrds != null) {
 			listToConvertToHtmlTable = ServiceUtils.getListOfMapByProduct(listPrds, Boolean.TRUE, Boolean.TRUE);
 		}

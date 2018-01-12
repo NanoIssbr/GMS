@@ -36,7 +36,7 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String QUERY_GET_ALL_PRODUCTS_STOCK = "select * from public.product p, public.stock s where p."+ATTR_ID_PRD+" = s."+ATTR_ID_PRD_STOCK+";";
 	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", " + ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD + ") VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " p where p." + ATTR_LIB_PRD + " like ? ;";
-	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " where " + ATTR_ID_PRD + " = ? ;";
+	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " p, public.stock s where s.idproductstock = p.idproduct and " + ATTR_ID_PRD + " = ? ;";
 	private static final String QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT = "select p.*,s.* from " + TABLE_NAME + " p , public.stock s where p." + ATTR_ID_PRD + " = s.idProductStock and p." + ATTR_QNT_MIN_PRD + " > s.quantite ";
 	
 	private DAOFactory daoFactory;
@@ -74,7 +74,7 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 			rSet = pState.executeQuery();
 			if (rSet.next()) {
-				produit = mapProduct(rSet);
+				produit = mapProduct(rSet, Boolean.FALSE);
 			}
 		} catch (SQLException e) {
 			throw new DAOConfigurationException("Can't execute the query " + e);
@@ -142,17 +142,18 @@ public class ProductDAOImpl implements ProductDAO {
 		Product prod = findProduct(produit.getLibelleProduct(), false, req);
 		if (prod == null) {
 			Calendar cal = Calendar.getInstance();
-			String idProduct = "prod/" + cal.get(Calendar.HOUR) + "-" + cal.get(Calendar.MINUTE) + "-" + cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.SECOND);
+			String idProduct = "prod-" + cal.get(Calendar.HOUR) + "-" + cal.get(Calendar.MINUTE) + "-" + cal.get(Calendar.YEAR) + "-" + cal.get(Calendar.SECOND);
 			produit.setIdProduct(idProduct);
 			produit.setDateCreation(cal.get(Calendar.DAY_OF_WEEK) + "-" + cal.get(Calendar.MONTH) + "-" + cal.get(Calendar.YEAR));
 			try {
 				cnx = daoFactory.getConnection();
-				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_ADD_PRODUCT, false, produit.getLibelleProduct(), (int) produit.getQuantiteMin(), produit.getDateCreation(), idProduct, produit.getPrize(), produit.getReferences());
+				pState = ServiceUtils.initRequestPrepared(cnx, QUERY_ADD_PRODUCT, false, produit.getLibelleProduct(), (produit.getQuantiteMin() == null) ? 0 : ((int) produit.getQuantiteMin()), produit.getDateCreation(), idProduct, produit.getPrize(), produit.getReferences());
 				int status = pState.executeUpdate();
 				if (status == 0) {
 					throw new DAOException("Can't create the product !");
 				} else {
-					stockDAO.addToStock(produit, req);
+					//stockDAO.addToStock(produit, req);
+					req.setAttribute("prodObject", produit);
 				}
 			} catch (SQLException e) {
 				throw new DAOException(e);
@@ -162,7 +163,8 @@ public class ProductDAOImpl implements ProductDAO {
 		} else {
 			// errorList.add(new ErrorObject("Erreur", "Produit exist dejas
 			// !"));
-			stockDAO.addToStock(produit, req);
+			//stockDAO.addToStock(produit, req);
+			req.setAttribute("prodObject", produit);
 		}
 	}
 
@@ -250,7 +252,7 @@ public class ProductDAOImpl implements ProductDAO {
 	 * @throws SQLException
 	 */
 
-	private Product mapProduct(ResultSet rSet) throws SQLException {
+	private Product mapProduct(ResultSet rSet, Boolean withQnt) throws SQLException {
 		Product produit = new Product();
 		produit.setIdProduct(rSet.getString(ATTR_ID_PRD));
 		produit.setLibelleProduct(rSet.getString(ATTR_LIB_PRD));
@@ -258,6 +260,9 @@ public class ProductDAOImpl implements ProductDAO {
 		produit.setReferences(rSet.getString(ATTR_REF_PRD));
 		produit.setPrize(rSet.getDouble(ATTR_PRIZE_PRD));
 		produit.setQuantiteMin(rSet.getInt(ATTR_QNT_MIN_PRD));
+		if(withQnt == Boolean.TRUE){
+			produit.setQnt(rSet.getInt(ATTR_QNT_PRD_STOCK));
+		}
 		return produit;
 	}
 

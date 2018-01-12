@@ -48,7 +48,6 @@
 	background-color: #000;
 	background-size: cover;
 	background-position: 50% 50%;
-	background-image: url('../../image/map-image.png');
 	background-repeat: repeat;
 	z-index: -9999;
 }
@@ -62,7 +61,6 @@
 	background-color: #000;
 	background-size: cover;
 	background-position: 50% 50%;
-	background-image: url('/it2/img/Location_map_micro_seat.jpg');
 	background-repeat: repeat;
 	z-index: -9999;
 }

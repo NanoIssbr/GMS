@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.gms.beans.Product;
+import org.gms.beans.Sell;
 import org.gms.clr.ServiceUtils;
 import org.gms.clr.ServletObjectGMS;
-import org.gms.dao.DAOFactory;
-import org.gms.dao.StockDAO;
 
 /**
  * Servlet implementation class GetAllProduct
@@ -36,7 +35,10 @@ public class SellIT extends ServletObjectGMS {
 		System.out.println(prd.getIdProduct());
 		System.out.println("from GET PRD ??");
 //		prd.setQnt(0);
+		prd = prodDAO.findProduct(prd.getIdProduct(), Boolean.TRUE, request);
 		stockDAO.sellFromStock(prd,1,  request);
+		sellDAO.addSellOperation((Sell)request.getAttribute("sellObject"), request);
+		request.removeAttribute("sellObject");
 		this.forwardLocal(URI_HOME_PAGE, request, response);
 		
 	}

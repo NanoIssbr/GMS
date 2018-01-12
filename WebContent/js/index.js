@@ -6,9 +6,18 @@ $(document).ready(function() {
 		$("#modalUpdatePrdOnStock").modal();
 	});
 	$("#sell").click(function() {
+		console.log("click on sell button");
 		$("#venteModal").modal();
 	});
+	$("#hstVente").click(function() {
+		$("#modalSellHistory").modal();
+	});
 });
+
+function updateHref(){
+	alert("fffff");
+}
+
 
 // new Product ajax request
 $(document).on("submit", "#newPrd", function(event) {
@@ -75,6 +84,23 @@ $(document).on("submit", "#getAllPrdsModal", function(event) {
 	});
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
+
+
+
+$(document).on("submit", "#getHistSellForm", function(event) {
+	var $form = $(this);
+	$.post($form.attr("action"), $form.serialize(), function(response) {
+		if (response != null) {
+			console.log('im logging here modal vente');
+			$form.trigger("reset");
+			$('#sellHistModalShow').html(response);
+		} else {
+			console.log('no response');
+		}
+	});
+	event.preventDefault(); // Important! Prevents submitting the form.
+});
+
 // new Abonnement ajax Request
 $(document).on("submit", "#newAbo", function(event) {
 	var $form = $(this);
@@ -98,7 +124,7 @@ $(document).on("submit", "#newAbo", function(event) {
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
 
-// test
-$("#venteID").click(function() {
-	console.log('ffffffffffffffffffffffffffffffffffffffff');
-});
+//// test
+//$("#venteID").click(function() {
+//	console.log('ffffffffffffffffffffffffffffffffffffffff');
+//});

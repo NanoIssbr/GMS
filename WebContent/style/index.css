@@ -45,7 +45,7 @@
 
 .header {
 	position: relative;
-	background-image: url(../image/lear_logo.jpg);
+	/* background-image: url(../image/lear_logo.jpg); */
 	background-repeat: no-repeat;
 	background-size: 180px;
 	width: 100%;

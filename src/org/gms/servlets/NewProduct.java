@@ -13,8 +13,6 @@ import org.gms.beans.ErrorObject;
 import org.gms.beans.Product;
 import org.gms.clr.ServiceUtils;
 import org.gms.clr.ServletObjectGMS;
-import org.gms.dao.DAOFactory;
-import org.gms.dao.ProductDAO;
 
 /**
  * Servlet implementation class NewProduct
@@ -36,6 +34,7 @@ public class NewProduct extends ServletObjectGMS {
 		
 		Product produit = ServiceUtils.getProductForm(request);
 		prodDAO.addProduct(produit, request);
+		stockDAO.addToStock((Product)request.getAttribute("prodObject"), request);
 		@SuppressWarnings("unchecked")
 		List<ErrorObject> erreurList = (List<ErrorObject>) request.getServletContext().getAttribute("erreurListe");
 		if(erreurList.isEmpty()){
