@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gms.beans.ErrorObject;
 import org.gms.dao.AbonnementDAO;
+import org.gms.dao.ClientDAO;
 import org.gms.dao.DAOFactory;
 import org.gms.dao.ProductDAO;
 import org.gms.dao.SellDAO;
@@ -25,6 +26,7 @@ public class ServletObjectGMS extends HttpServlet {
 	public DAOFactory daoFactory;
 	public StockDAO stockDAO;
 	public SellDAO sellDAO;
+	public ClientDAO clientDAO;
 	/**
 	 * 
 	 */
@@ -51,7 +53,7 @@ public class ServletObjectGMS extends HttpServlet {
     	this.abonnDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getAbonnementDAO();
     	this.stockDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getStockDAO();
     	this.sellDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getSellDAO();
-    	System.out.println("ggg");
+    	this.clientDAO = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getClientDAO();
     }
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

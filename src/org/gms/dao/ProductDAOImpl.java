@@ -36,7 +36,7 @@ public class ProductDAOImpl implements ProductDAO {
 	private static final String QUERY_GET_ALL_PRODUCTS_STOCK = "select * from public.product p, public.stock s where p."+ATTR_ID_PRD+" = s."+ATTR_ID_PRD_STOCK+";";
 	private static final String QUERY_ADD_PRODUCT = "INSERT INTO " + TABLE_NAME + " (" + ATTR_LIB_PRD + ", " + ATTR_QNT_MIN_PRD + ", " + ATTR_DATE_PRD + ", " + ATTR_ID_PRD + ", " + ATTR_PRIZE_PRD + ", " + ATTR_REF_PRD + ") VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String QUERY_GET_PRODUCT_BY_LIBELLE = "select * from " + TABLE_NAME + " p where p." + ATTR_LIB_PRD + " like ? ;";
-	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " p, public.stock s where s.idproductstock = p.idproduct and " + ATTR_ID_PRD + " = ? ;";
+	private static final String QUERY_GET_PRODUCT_BY_ID = "select * from " + TABLE_NAME + " p, public.stock s where s.idproductstock = p.idproduct and p." + ATTR_ID_PRD + " = ? ;";
 	private static final String QUERY_GET_PRODUCT_BY_NUMBER_ELEMENT = "select p.*,s.* from " + TABLE_NAME + " p , public.stock s where p." + ATTR_ID_PRD + " = s.idProductStock and p." + ATTR_QNT_MIN_PRD + " > s.quantite ";
 	
 	private DAOFactory daoFactory;
@@ -74,7 +74,7 @@ public class ProductDAOImpl implements ProductDAO {
 			}
 			rSet = pState.executeQuery();
 			if (rSet.next()) {
-				produit = mapProduct(rSet, Boolean.FALSE);
+				produit = mapProduct(rSet, Boolean.TRUE);
 			}
 		} catch (SQLException e) {
 			throw new DAOConfigurationException("Can't execute the query " + e);

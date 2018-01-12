@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="con" path="oracle.eclipse.tools.glassfish.lib.system">
+	<classpathentry kind="con" path="oracle.eclipse.tools.glassfish.lib.system">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
@@ -14,5 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/issbr/My_Folder/glassfish4/glassfish/modules/gson.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0"/>
+	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

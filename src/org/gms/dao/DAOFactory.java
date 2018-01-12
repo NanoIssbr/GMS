@@ -99,5 +99,8 @@ public class DAOFactory {
 	public SellDAO getSellDAO(){
 		return new SellDAOImp(this);
 	}
+	public ClientDAO getClientDAO(){
+		return new ClientDAOImpl(this);
+	}
 
 }

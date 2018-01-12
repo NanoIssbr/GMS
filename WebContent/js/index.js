@@ -12,6 +12,9 @@ $(document).ready(function() {
 	$("#hstVente").click(function() {
 		$("#modalSellHistory").modal();
 	});
+	$("#lc").click(function() {
+		$("#modalAllClient").modal();
+	});
 });
 
 function updateHref(){
@@ -56,20 +59,24 @@ $(document).on("submit", "#getAllPrds", function(event) {
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
 
-//// get All product ajax request from modal
-//$(document).on("submit", "#getAllPrdsModal", function(event) {
-//	var $form = $(this);
-//	$.post($form.attr("action"), $form.serialize(), function(response) {
-//		if (response != null) {
-//			console.log('im logging here modal vente');
-//			$form.trigger("reset");
-//			$('#allProductShowModal').html(response);
-//		} else {
-//			console.log('no response');
-//		}
-//	});
-//	event.preventDefault(); // Important! Prevents submitting the form.
-//});
+
+//get All Clients
+$(document).on("submit", "#getAllClientForm", function(event) {
+	var $form = $(this);
+	$.post($form.attr("action"), $form.serialize(), function(response) {
+		if (response != null) {
+			console.log('im logging herer');
+			$form.trigger("reset");
+			$('#allClientShow').html(response);
+		} else {
+			console.log('no response');
+		}
+	});
+
+	event.preventDefault(); // Important! Prevents submitting the form.
+});
+
+
 // get All product ajax request from modal
 $(document).on("submit", "#getAllPrdsModal", function(event) {
 	var $form = $(this);
@@ -86,7 +93,7 @@ $(document).on("submit", "#getAllPrdsModal", function(event) {
 });
 
 
-
+//get historic of all sells operations from modal
 $(document).on("submit", "#getHistSellForm", function(event) {
 	var $form = $(this);
 	$.post($form.attr("action"), $form.serialize(), function(response) {
@@ -123,8 +130,3 @@ $(document).on("submit", "#newAbo", function(event) {
 
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
-
-//// test
-//$("#venteID").click(function() {
-//	console.log('ffffffffffffffffffffffffffffffffffffffff');
-//});

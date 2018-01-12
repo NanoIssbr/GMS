@@ -15,6 +15,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.gms.beans.Client;
 import org.gms.beans.ErrorObject;
 import org.gms.beans.Product;
 import org.gms.beans.Sell;
@@ -34,6 +35,8 @@ public class ServiceUtils {
 	private static final String INPUT_SRC_BY_LIBELLE_PRODUCT = "rPrd";
 	private static final String INPUT_SRC_BY_LIBELLE_PRODUCT_MODAL = "rPrdModal";
 	private static final String ID_FROM_URI_TO_SELL = "n";
+	private static final String INPUT_CLIENT_FIRSTNAME = "clientFirstName";
+	private static final String INPUT_CLIENT_LASTNAME = "clientLastName";
 
 	public ServiceUtils() {
 
@@ -117,6 +120,17 @@ public class ServiceUtils {
 		}
 
 		return produit;
+	}
+	
+	
+	public static Client getClientForm(HttpServletRequest req) {
+		Client client = new Client();
+		if (req.getParameter(INPUT_CLIENT_FIRSTNAME) != null && !req.getParameter(INPUT_CLIENT_FIRSTNAME).isEmpty() && req.getParameter(INPUT_CLIENT_LASTNAME) != null && !req.getParameter(INPUT_CLIENT_LASTNAME).isEmpty()) {
+			client.setNomClient("%" + req.getParameter(INPUT_CLIENT_LASTNAME) + "%");
+			client.setPrenomClient("%" + req.getParameter(INPUT_CLIENT_FIRSTNAME) + "%");
+		}
+
+		return client;
 	}
 
 	public static Product getSearchPrdLibelleFormModal(HttpServletRequest req) {
@@ -234,7 +248,7 @@ public class ServiceUtils {
 				}
 				tableWithData.append("<td>" + map.get(key) + "</td>");
 			}
-			tableWithData.append("<td><input type=\"number\" name=\"qProduct\" class=\"form-control\" id=\""+map.get("n")+"\" min=\"0\" required=\"required\" /></td>");
+			tableWithData.append("<td><input type=\"number\" name=\"qProduct\" class=\"form-control\" id=\""+map.get("n")+"\" min=\"0\"  /></td>");
 			tableWithData.append("<td><a id=\"a"+map.get("n")+"\"onClick=\"\" href=\"vendre?n="+map.get("n")+"\">Vente</a></td>");
 			tableWithData.append("</tr>");
 
@@ -252,6 +266,22 @@ public class ServiceUtils {
 	 */
 	public static StringBuffer listToHTMLTableSellOperations(List<HashMap<String, Object>> listObj) {
 		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Libelle</th><th>Date vente</th><th>Prix</th><th>Quantite</th>");
+		for (HashMap<String, Object> map : listObj) {
+			tableWithData.append("<tr>");
+			for (String key : map.keySet()) {
+				tableWithData.append("<td>" + map.get(key) + "</td>");
+			}
+			tableWithData.append("</tr>");
+
+		}
+		tableWithData.append("</table>");
+		return tableWithData;
+	}
+	
+	
+	
+	public static StringBuffer listToHTMLTableClients(List<HashMap<String, Object>> listObj) {
+		StringBuffer tableWithData = new StringBuffer("<table class=\"table table-hover table-bordered\"style=\"border-collapse: collapse; color: black;\"><thead><tr><th>Nom</th><th>Prenom</th>");
 		for (HashMap<String, Object> map : listObj) {
 			tableWithData.append("<tr>");
 			for (String key : map.keySet()) {
@@ -284,6 +314,20 @@ public class ServiceUtils {
 			if(withQnt == Boolean.TRUE){
 				map.put("qnt", prd.getQnt());
 			}
+			listToConvertToHtmlTable.add((HashMap<String, Object>) map);
+		}
+		return listToConvertToHtmlTable;
+	}
+	
+	
+	
+	public static List<HashMap<String, Object>> getListOfMapByClient(List<Client> listClients) {
+		List<HashMap<String, Object>> listToConvertToHtmlTable = new ArrayList<>();
+		Map<String , Object> map = null;
+		for (Client client : listClients) {
+			map = new HashMap<String, Object>();
+			map.put("nom", client.getNomClient());
+			map.put("prenom", client.getPrenomClient());
 			listToConvertToHtmlTable.add((HashMap<String, Object>) map);
 		}
 		return listToConvertToHtmlTable;

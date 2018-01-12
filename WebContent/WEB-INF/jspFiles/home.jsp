@@ -44,16 +44,17 @@
 	<!-- sideBarre begin -->
 	<div id="sidebar-wrapper">
 		<ul class="sidebar-nav">
-			<li id="nr" style="color: white; cursor: pointer"
-				class="sidebar-brand">Produit</li>
+			<li id="nr" style="color: white; cursor: pointer" class="sidebar-brand">Produit</li>
 			<li id="lel"><a href="#"> Ajouter Produit </a></li>
 			<li id="updPrdKey"><a href="#"> Modifier Stock </a></li>
-			<li id="nr1" style="color: white; cursor: pointer"
-				class="sidebar-brand">Vente</li>
-				<li id="sell"><a href="#"> Vendre </a></li>
+			<li id="nr1" style="color: white; cursor: pointer" class="sidebar-brand">Vente</li>
+			<li id="sell"><a href="#"> Vendre </a></li>
 			<li id="hstVente"><a href="#"> Historique </a></li>
-			<li class="sidebar-brand"><a href="logOut" style="color: red;">
-					Logout </a></li>
+			<li id="nr2" style="color: white; cursor: pointer" class="sidebar-brand">Client</li>
+			<li id="lc"><a href="#"> Liste des Clients </a></li>
+			<li id="ac"><a href="#"> Ajouter Crédit </a></li>
+			<li id="dc"><a href="#"> Détail Client </a></li>
+			<li class="sidebar-brand"><a href="logOut" style="color: red;"> Logout </a></li>
 		</ul>
 	</div>
 	<br />
@@ -222,6 +223,28 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- modal liste des clients -->
+	<div class="container">
+		<div class="modal fade" id="modalAllClient" role="dialog">
+			<div style="width: 600px;" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="padding: 35px 50px; background-color: black;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<p id="" style="color: white; font-size: 18px;">Historique des ventes</p>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<form action="getAllClient" id="getAllClientForm" method="post">
+							<span id="allClientShow"></span> 
+							<input type="submit" name="submitAllClient" class="btn btn-danger" value="Submit" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
 
 </body>
 </html>

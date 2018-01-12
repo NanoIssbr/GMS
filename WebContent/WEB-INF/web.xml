@@ -67,7 +67,7 @@
   <servlet-mapping>
     <servlet-name>SellIT</servlet-name>
     <url-pattern>/vendre</url-pattern>
-    </servlet-mapping>
+  </servlet-mapping>
   <servlet>
     <servlet-name>GetSellHistory</servlet-name>
     <servlet-class>org.gms.servlets.GetSellHistory</servlet-class>
@@ -75,5 +75,13 @@
   <servlet-mapping>
     <servlet-name>GetSellHistory</servlet-name>
     <url-pattern>/getHistSell</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetAllClients</servlet-name>
+    <servlet-class>org.gms.servlets.GetAllClients</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllClients</servlet-name>
+    <url-pattern>/getAllClient</url-pattern>
   </servlet-mapping>
 </web-app>
