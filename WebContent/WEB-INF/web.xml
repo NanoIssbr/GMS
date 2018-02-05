@@ -84,4 +84,12 @@
     <servlet-name>GetAllClients</servlet-name>
     <url-pattern>/getAllClient</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>NewClient</servlet-name>
+    <servlet-class>org.gms.servlets.NewClient</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewClient</servlet-name>
+    <url-pattern>/addClient</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -122,12 +122,15 @@ public class ServiceUtils {
 		return produit;
 	}
 	
-	
+	/**
+	 * @param req
+	 * @return
+	 */
 	public static Client getClientForm(HttpServletRequest req) {
 		Client client = new Client();
 		if (req.getParameter(INPUT_CLIENT_FIRSTNAME) != null && !req.getParameter(INPUT_CLIENT_FIRSTNAME).isEmpty() && req.getParameter(INPUT_CLIENT_LASTNAME) != null && !req.getParameter(INPUT_CLIENT_LASTNAME).isEmpty()) {
-			client.setNomClient("%" + req.getParameter(INPUT_CLIENT_LASTNAME) + "%");
-			client.setPrenomClient("%" + req.getParameter(INPUT_CLIENT_FIRSTNAME) + "%");
+			client.setNomClient(req.getParameter(INPUT_CLIENT_LASTNAME));
+			client.setPrenomClient(req.getParameter(INPUT_CLIENT_FIRSTNAME));
 		}
 
 		return client;

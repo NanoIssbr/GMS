@@ -52,7 +52,7 @@
 			<li id="hstVente"><a href="#"> Historique </a></li>
 			<li id="nr2" style="color: white; cursor: pointer" class="sidebar-brand">Client</li>
 			<li id="lc"><a href="#"> Liste des Clients </a></li>
-			<li id="ac"><a href="#"> Ajouter Crédit </a></li>
+			<li id="ac"><a href="#"> Ajouter Client </a></li>
 			<li id="dc"><a href="#"> Détail Client </a></li>
 			<li class="sidebar-brand"><a href="logOut" style="color: red;"> Logout </a></li>
 		</ul>
@@ -237,6 +237,39 @@
 						<form action="getAllClient" id="getAllClientForm" method="post">
 							<span id="allClientShow"></span> 
 							<input type="submit" name="submitAllClient" class="btn btn-danger" value="Submit" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- modal ajouter client -->
+	<div class="container">
+		<div class="modal fade" id="modalAddClient" role="dialog">
+			<div style="width: 600px;" class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header" style="padding: 35px 50px; background-color: black;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<p id="" style="color: white; font-size: 18px;">Ajouter client</p>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<form action="addClient" id="addClientForm" method="post">
+							<label for="libelleProduct">Nom client</label> 
+							<input type="text" name="clientLastName" class="form-control" id="clientName" required="required" autofocus /> 
+							<label for="qProduct">Prénom client</label> 
+							<input type="text" name="clientFirstName" class="form-control" id="clientFirstName" min="0" required="required" />
+							<br/><br/>
+							<input type="submit" name="submitAddClient" class="btn btn-danger" value="Submit" />
+							<br/>
+							<!-- <span id="addClientShow"></span> -->
+							<div class="alert alert-success alert-dismissible" style="display: none;" role="alert">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span style="color: black;" aria-hidden="true">&times;</span>
+								</button>
+								<strong>Info!</strong> <span id="addClientShow"></span>
+							</div>
 						</form>
 					</div>
 				</div>

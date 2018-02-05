@@ -15,6 +15,9 @@ $(document).ready(function() {
 	$("#lc").click(function() {
 		$("#modalAllClient").modal();
 	});
+	$("#ac").click(function() {
+		$("#modalAddClient").modal();
+	});
 });
 
 function updateHref(){
@@ -75,6 +78,49 @@ $(document).on("submit", "#getAllClientForm", function(event) {
 
 	event.preventDefault(); // Important! Prevents submitting the form.
 });
+
+////add new Client
+//$(document).on("submit", "#addClientForm", function(event) {
+//	var $form = $(this);
+//	$.post($form.attr("action"), $form.serialize(), function(response) {
+//		if (response != null) {
+//			console.log('im logging herer');
+//			$form.trigger("reset");
+//			$('#addClientShow').html(response);
+//		} else {
+//			console.log('no response');
+//		}
+//	});
+//	event.preventDefault(); // Important! Prevents submitting the form.
+//});
+//
+
+
+$(document).on("submit", "#addClientForm", function(event) {
+	var $form = $(this);
+	$.post($form.attr("action"), $form.serialize(), function(response) {
+		if (response != null) {
+			console.log('im logging herer');
+			$form.trigger("reset");
+			console.log(response);
+			$('#addClientShow').html(response);
+			$('.alert').show();
+			setTimeout(function() {
+				$('.alert').hide();
+			}, 20000);
+		} else {
+			console.log('no response');
+		}
+	});
+
+	event.preventDefault(); // Important! Prevents submitting the form.
+});
+
+
+
+
+
+
 
 
 // get All product ajax request from modal
